@@ -1,0 +1,118 @@
+---
+title: "Species distribution mapping and classsification with R"
+author: "Miles McBain"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    theme: flatly
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
+library(here)
+library(randomForest)
+```
+
+
+# Introduction
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam porttitor id ex
+molestie viverra. Class aptent taciti sociosqu ad litora torquent per conubia
+nostra, per inceptos himenaeos. Donec tincidunt pharetra mollis. Nulla at nisi
+sagittis, porta leo vitae, suscipit massa. Aenean pellentesque nunc lacus,
+sagittis tristique turpis maximus facilisis. Nunc sagittis scelerisque mi nec
+interdum. Pellentesque lacus dolor, viverra a ex vel, rhoncus eleifend nunc.
+Maecenas sit amet commodo orci. Vivamus ornare quis lacus ac sodales. Praesent
+ac sapien rhoncus, egestas arcu vitae, blandit arcu. Mauris condimentum
+condimentum facilisis.
+
+# Distribution of species across Inner Brisbane
+
+Morbi urna neque, hendrerit et magna id, imperdiet consequat lacus. Aenean
+consectetur, ante et vestibulum venenatis, elit libero lobortis felis, id
+lacinia augue nisl varius felis. Suspendisse potenti. Orci varius natoque
+penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque
+lacinia vulputate justo, a venenatis diam vestibulum a. Nullam diam ipsum,
+dapibus eu tellus et, dignissim cursus sapien. Nam dapibus eros a massa
+ultrices, sit amet commodo orci vulputate. Donec commodo faucibus ex, at
+eleifend felis luctus id. Etiam molestie dui eget augue lacinia dapibus vitae
+non ipsum.
+
+```{r, fig.cap="Points over inner brisbane with river for reference", crop = TRUE}
+knitr::include_graphics(here("output/species_distibution_points.png"))
+```
+
+But hexes are much nicer yeah?
+
+```{r, fig.cap="H3 hex binned distribution over inner brisbane with river for reference"}
+knitr::include_graphics(here("output/species_distibution_hexes.png"))
+```
+
+# Distribution of observations over months
+
+Aenean dapibus bibendum tincidunt. Fusce consectetur mi tortor, ut lacinia dolor
+dictum non. Sed rhoncus a odio eget consequat. Orci varius natoque penatibus et
+magnis dis parturient montes, nascetur ridiculus mus. Nulla et placerat purus.
+Nam efficitur vehicula nunc, in lobortis nisl fermentum ac. Curabitur ornare
+mauris a imperdiet fermentum. Etiam tristique hendrerit mi, at iaculis mauris
+rutrum ornare. Quisque porta nisi et eros mollis, non tempus nibh lobortis. Cras
+volutpat dolor id turpis accumsan condimentum. Pellentesque ex orci, tincidunt
+eu erat at, scelerisque faucibus tellus. Pellentesque nec aliquam lacus, eget
+mollis libero. Nunc eget nibh tincidunt, aliquet est at, scelerisque justo.
+Proin eleifend nec urna nec condimentum. Nullam dapibus tincidunt sagittis.
+
+```{r, fig.cap="Frequency of oberservation binned monthly"}
+knitr::include_graphics(here("output/species_distibution_month.png"))
+```
+
+# Modelling
+
+Curabitur id lectus mollis, elementum felis eu, maximus est. Praesent et
+volutpat magna. Proin convallis sem vestibulum arcu ultrices volutpat. Phasellus
+accumsan eros et erat varius, id vulputate arcu euismod. Quisque maximus, purus
+sed maximus feugiat, felis risus feugiat purus, id consectetur erat tellus ac
+neque. In rhoncus, nulla nec accumsan interdum, nulla felis consequat ipsum, et
+bibendum enim odio et nunc. In efficitur, orci non lacinia consectetur, lectus
+ligula hendrerit arcu, at aliquam sapien ex sed ipsum. Proin tristique tempus
+eros, in ullamcorper justo mattis vel. Proin varius tincidunt mollis. Duis
+libero enim, sodales id faucibus euismod, elementum eu ante. Sed sed maximus
+leo.
+
+```{r}
+species_classification <- readRDS(here("output/species_classifier.Rds"))
+species_classification
+```
+
+And the class accuracy spatially:
+
+```{r, fig.cap = "H3 Hex binned species classification accuracy"}
+knitr::include_graphics(here("output/species_classification_accuracy_spatial.png"))
+```
+
+And the ROC for 1 class:
+
+```{r, fig.cap = "ROC for classification of Threskiornis molucca", fig.align = "center"}
+knitr::include_graphics(here("output/species_classification_ROC.png"))
+```
+
+## Reproducibility
+
+<details><summary>Reproducibility receipt</summary>
+
+```{r}
+## datetime
+Sys.time()
+
+## repository
+c(
+  system2("git", args = c("log", "--name-status", "-1"), stdout = TRUE),
+  system2("git", args = c("remote", "-v"), stdout = TRUE)
+)
+
+## session info
+sessionInfo()
+```
+
+</details>
