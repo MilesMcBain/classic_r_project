@@ -1,3 +1,4 @@
 data/*.Rds
 doc/*.html
-output
+output/*.Rds
+output/*.png
