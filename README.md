@@ -15,3 +15,4 @@ It features:
 
 You will need the following environment variables set:
   - `ALA_EMAIL` and email address registered with the _Atlas of Living Australa_
+  - Register here: https://auth.ala.org.au/userdetails/registration/createAccount
