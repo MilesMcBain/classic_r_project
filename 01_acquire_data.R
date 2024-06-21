@@ -53,5 +53,7 @@ if (!file.exists(species_data_file_path)) {
   # it gave a HTTP 400 bad request with auth failure.
   # Perhaps some fields are restricted for queries?
   # So instead we do filtering here.
+
+  # Save dataset
   saveRDS(occurrences, species_data_file_path)
 }
