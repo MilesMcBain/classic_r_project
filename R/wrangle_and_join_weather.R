@@ -20,7 +20,7 @@ wrangle_and_join_weather <- function(
   occurrences <-
     species_data |>
     filter(
-      scientificName %in% STUDY_SPECIES$species,
+      scientificName %in% study_species$species,
       occurrenceStatus == "PRESENT",
     ) |>
     mutate(
