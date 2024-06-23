@@ -30,7 +30,6 @@ galah_config(
   atlas = "ALA",
   email = Sys.getenv("ALA_EMAIL") # You can replace this with your email to run. But you might now want to commit it to a public repository!
 )
-study_species <- search_taxa(c("Threskiornis molucca", "Threskiornis spinicollis"))
 study_date <- ymd("2024-05-08")
 data_start_date <- ymd("2004-01-01")
 h3_hex_resolutions <- c(7, 8, 9)
@@ -39,6 +38,10 @@ tar_option_set(
 )
 
 list(
+  tar_target(
+    study_species,
+    search_taxa(c("Threskiornis molucca", "Threskiornis spinicollis"))
+  ),
   ##### Data files #####
   tar_file(
     weather_data_path,
