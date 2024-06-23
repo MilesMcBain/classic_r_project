@@ -11,6 +11,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
+library(targets)
 library(here)
 library(randomForest)
 ```
@@ -41,13 +42,13 @@ eleifend felis luctus id. Etiam molestie dui eget augue lacinia dapibus vitae
 non ipsum.
 
 ```{r, fig.cap="Points over inner brisbane with river for reference", crop = TRUE}
-gg_species_distribution_points
+tar_read(gg_species_distribution_points)
 ```
 
 But hexes are much nicer yeah?
 
 ```{r, fig.cap="H3 hex binned distribution over inner brisbane with river for reference"}
-gg_species_distribution_hexes
+tar_read(gg_species_distribution_hexes)
 ```
 
 # Distribution of observations over months
@@ -64,7 +65,7 @@ mollis libero. Nunc eget nibh tincidunt, aliquet est at, scelerisque justo.
 Proin eleifend nec urna nec condimentum. Nullam dapibus tincidunt sagittis.
 
 ```{r, fig.cap="Frequency of oberservation binned monthly"}
-gg_species_distribution_months
+tar_read(gg_species_distribution_months)
 ```
 
 # Modelling
@@ -81,19 +82,19 @@ libero enim, sodales id faucibus euismod, elementum eu ante. Sed sed maximus
 leo.
 
 ```{r}
-species_classification_model
+tar_read(species_classification_model)
 ```
 
 And the class accuracy spatially:
 
 ```{r, fig.cap = "H3 Hex binned species classification accuracy"}
-gg_species_class_accuracy_hexes
+tar_read(gg_species_class_accuracy_hexes)
 ```
 
 And the ROC for 1 class:
 
 ```{r, fig.cap = "ROC for classification of Threskiornis molucca", fig.align = "center"}
-plot(base_plot_model_roc_object)
+plot(tar_read(base_plot_model_roc_object))
 ```
 
 ## Reproducibility
