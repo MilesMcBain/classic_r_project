@@ -13,7 +13,7 @@ fetch_data <- function(study_species, study_date, study_area_file) {
   study_area <- st_read(study_area_file)
   occurrences <-
     galah_call() |>
-    identify(STUDY_SPECIES) |>
+    identify(study_species) |>
     galah_geolocate(study_area) |>
     select(
       recordID,
@@ -31,7 +31,7 @@ fetch_data <- function(study_species, study_date, study_area_file) {
     ) |>
     atlas_occurrences() |>
     filter(
-      eventDate < STUDY_DATE
+      eventDate < study_date
     )
 
 }
