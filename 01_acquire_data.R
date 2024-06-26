@@ -11,7 +11,7 @@ conflicts_prefer()
 
 galah_config(
   atlas = "ALA",
-  email = Sys.getenv("ALA_EMAIL") # You can replace this with your email to run. But you might now want to commit it to a public repository!
+  email = Sys.getenv("ALA_EMAIL") # You can replace this with your email to run. But you might not want to commit it to a public repository!
 )
 STUDY_SPECIES <- search_taxa(c("Threskiornis molucca", "Threskiornis spinicollis"))
 STUDY_DATE <- ymd("2024-05-08")
