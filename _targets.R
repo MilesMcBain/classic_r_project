@@ -16,25 +16,19 @@ library(tibble)
 library(tidyr)
 library(targets)
 library(tarchetypes)
+library(crew)
 
 # Source all functions
 tar_source()
 
-conflicts_prefer(
-  dplyr::filter,
-  tidyr::unnest
-)
-
 ##### Options / Environment variables / GLOBALS #####
-galah_config(
-  atlas = "ALA",
-  email = Sys.getenv("ALA_EMAIL") # You can replace this with your email to run. But you might now want to commit it to a public repository!
-)
 study_date <- ymd("2024-05-08")
 data_start_date <- ymd("2004-01-01")
 h3_hex_resolutions <- c(7, 8, 9)
 tar_option_set(
-  seed = 2048
+  seed = 2048,
+  workspace_on_error = TRUE,
+  controller = crew_controller_local(workers = 2)
 )
 
 list(
@@ -115,12 +109,30 @@ list(
     initial_split(occurrences_training_data)
   ),
   tar_target(
+    mtry_candidates,
+    c(1, 2, 3)
+  ),
+  tar_target(
+    num_trees_candidates,
+    c(200, 500, 100, 1000)
+  ),
+  tar_target(
+    training_cross_validation_folds,
+    vfold_cv(training(test_train_split), v = 5, repeats = 1)
+  ),
+  tar_target(
+    species_classification_model_training_results,
+    fit_fold_calc_results(
+      training_cross_validation_folds$splits[[1]],
+      num_trees_candidates,
+      mtry_candidates
+    ),
+    pattern = cross(training_cross_validation_folds, mtry_candidates, num_trees_candidates)
+  ),
+  tar_target(
     species_classification_model_training_summary,
-    species_classification_model_grid_search(
-      training_data = training(test_train_split),
-      n_cv_folds = 5,
-      mtry_candidates = c(1, 2, 3),
-      num_trees_candidates = c(200, 500, 100)
+    summarise_species_model_training_results(
+      species_classification_model_training_results
     )
   ),
   tar_target(
@@ -156,4 +168,16 @@ list(
     )
   ),
   tar_render(report, "docs/report.Rmd")
-)
+) |>
+  tar_hook_before(
+    hook = {
+      conflicts_prefer(
+        dplyr::filter,
+      )
+      galah_config(
+        atlas = "ALA",
+        email = Sys.getenv("ALA_EMAIL") # You can replace this with your email to run. But you might now want to commit it to a public repository!
+      )
+    }
+  )
+
