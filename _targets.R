@@ -63,12 +63,18 @@ list(
 
   #### Wrangle Data #####
   tar_target(
-    occurrences_weather_hexes,
+    occurrences_weather,
     wrangle_and_join_weather(
       species_data = occurrences,
       study_species,
       data_start_date,
       weather_data_path,
+    )
+  ),
+  tar_target(
+    occurrence_hexes,
+    create_h3_indexes(
+      occurrences_weather,
       h3_hex_resolutions
     )
   ),
@@ -81,28 +87,28 @@ list(
   tar_target(
     gg_species_distribution_points,
     plot_species_distribution_points(
-      occurrences_weather_hexes,
+      occurrences_weather,
       brisbane_river
     )
   ),
   tar_target(
     gg_species_distribution_hexes,
     plot_species_distribution_hexes(
-      occurrences_weather_hexes,
+      occurrences_weather,
       brisbane_river
     )
   ),
   tar_target(
     gg_species_distribution_months,
     plot_species_distribution_months(
-      occurrences_weather_hexes
+      occurrences_weather
     )
   ),
 
   ##### Model Data #####
   tar_target(
     occurrences_training_data,
-    create_trainging_data(occurrences_weather_hexes)
+    create_trainging_data(occurrences_weather)
   ),
   tar_target(
     test_train_split,

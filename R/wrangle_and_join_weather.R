@@ -50,16 +50,9 @@ wrangle_and_join_weather <- function(
       by = "date"
     )
 
-  occurrences_weather_hexes <-
-    st_as_sf(
-      occurrences_weather,
-      coords = c("decimalLongitude", "decimalLatitude"),
-      remove = FALSE,
-      crs = first(occurrences$geodeticDatum)
-    ) |>
+  occurrences_weather |>
     mutate(
-      compute_h3_indices_at_resolutions(h3_hex_resolutions, geometry)
+      id = seq(n())
     )
 
-  occurrences_weather_hexes
 }
