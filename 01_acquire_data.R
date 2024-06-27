@@ -5,7 +5,9 @@ library(lubridate)
 library(sf)
 library(dplyr)
 
-conflicts_prefer()
+conflicts_prefer(
+  dplyr::filter
+)
 
 ##### Options / Environment variables / GLOBALS #####
 
@@ -15,8 +17,6 @@ galah_config(
 )
 STUDY_SPECIES <- search_taxa(c("Threskiornis molucca", "Threskiornis spinicollis"))
 STUDY_DATE <- ymd("2024-05-08")
-
-search_taxa("Ibis")
 
 ##### Fetch Data #####
 
