@@ -9,12 +9,14 @@
 #' @author Miles McBain
 #' @export
 plot_species_distribution_hexes <- function(
-  occurrences_weather_hexes,
-  brisbane_river
+  occurrences_weather,
+  brisbane_river,
+  occurrences_hexes
 ) {
 
   hex_occurrences <-
-    occurrences_weather_hexes |>
+    occurrences_weather |>
+    left_join(occurrences_hexes, by = "id") |>
     st_drop_geometry() |>
     select(scientificName, h3_hex_8) |>
     summarise(

@@ -12,22 +12,13 @@
 plot_species_class_accuracy_hexes <- function(
   species_model_validation_data,
   brisbane_river,
-  h3_hex_resolutions
+  occurrences_hexes
 ) {
 
   # Add hexagon indicies
-  h3_hex_resolutions <- c(7, 8, 9)
   model_validation_predictions_hex <-
     species_model_validation_data |>
-    st_as_sf(
-      coords = c("decimalLongitude", "decimalLatitude"),
-      remove = FALSE,
-      crs = 4326
-    ) |>
-    mutate(
-      compute_h3_indices_at_resolutions(h3_hex_resolutions, geometry)
-    ) |>
-    st_drop_geometry()
+    left_join(occurrences_hexes, by = "id")
 
   # Summarise by hexagon
   validation_data_hex_summary <-

@@ -19,7 +19,8 @@ create_trainging_data <- function(occurrences_weather_hexes) {
     month,
     air_tmin,
     air_tmax,
-    vp
+    vp,
+    id
   ) |>
   mutate(
     scientificName = as.factor(scientificName)

@@ -1,7 +1,7 @@
 fit_fold_calc_results <- function(split, num_trees, mtry) {
   model <-
     randomForest(
-      scientificName ~ .,
+      scientificName ~ . - id,
       data = training(split),
       mtry = mtry,
       ntree = num_trees

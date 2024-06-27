@@ -72,7 +72,7 @@ list(
     )
   ),
   tar_target(
-    occurrence_hexes,
+    occurrences_hexes,
     create_h3_indexes(
       occurrences_weather,
       h3_hex_resolutions
@@ -95,7 +95,8 @@ list(
     gg_species_distribution_hexes,
     plot_species_distribution_hexes(
       occurrences_weather,
-      brisbane_river
+      brisbane_river,
+      occurrences_hexes
     )
   ),
   tar_target(
@@ -162,7 +163,7 @@ list(
     plot_species_class_accuracy_hexes(
       species_model_validation_data,
       brisbane_river,
-      h3_hex_resolutions
+      occurrences_hexes
     )
   ),
 

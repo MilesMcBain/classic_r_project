@@ -19,7 +19,7 @@ fit_final_species_classification_model <- function(
   # Train best model
   species_classification_model <-
     randomForest(
-      scientificName ~ .,
+      scientificName ~ . - id,
       data = training_data,
       mtry = first(summarised_training_results$mtry),
       ntree = first(summarised_training_results$num_trees)
