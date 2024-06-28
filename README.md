@@ -14,5 +14,5 @@ It features:
 # External Dependencies
 
 You will need the following environment variables set:
-  - `ALA_EMAIL` and email address registered with the _Atlas of Living Australa_
+  - `ALA_EMAIL` and email address registered with the _Atlas of Living Australia_
   - Register here: https://auth.ala.org.au/userdetails/registration/createAccount
